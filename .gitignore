@@ -1,3 +1,3 @@
 venv
-.env  # Add this line
+.env
 __pycache__

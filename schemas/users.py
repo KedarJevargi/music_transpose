@@ -39,8 +39,10 @@ class SignUpResponse(BaseModel):
     ]
 class SignInResponse(BaseModel):
     access_token: str
+    name: str
     token_type: str
     message: str
+
 
 
 class ForgotPasswordRequest(BaseModel):
