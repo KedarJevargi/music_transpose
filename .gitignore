@@ -1,3 +1,4 @@
+.gitignore
 venv
-.env
+.env  # Add this line
 __pycache__

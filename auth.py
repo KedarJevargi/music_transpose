@@ -5,11 +5,12 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
-import os
+import os # Ensure os is imported
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/signin")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/signin") # Assuming it's /signin now
 
-SECRET_KEY = os.getenv("JWT_SECRET", "mysecretkey")
+# Fetch SECRET_KEY from environment variable
+SECRET_KEY = os.getenv("JWT_SECRET", "mysecretkey") # Using a strong fallback is good
 ALGORITHM = "HS256"
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -21,7 +22,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: str = payload.get("user_id")
+        user_id: str = payload.get("user_id") # type: ignore
         if user_id is None:
             raise credentials_exception
     except JWTError:

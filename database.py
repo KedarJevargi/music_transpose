@@ -1,15 +1,21 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from typing import Generator 
+from typing import Generator
+import os
 
 
-DATABASE_URL = "mysql+pymysql://root:admin%40123@127.0.0.1:3306/music_db"
+# --- REMOVE THE FALLBACK VALUE HERE ---
+DATABASE_URL = os.getenv("DATABASE_URL")
 
+# --- IMPORTANT: Add a check to ensure the URL is loaded ---
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable not set. Please configure your .env file.")
+# --------------------------------------
 
 engine = create_engine(
     DATABASE_URL,
-    echo=True, 
-    future=True 
+    echo=True,
+    future=True
 )
 
 
@@ -22,7 +28,7 @@ SessionLocal = sessionmaker(
 Base = declarative_base()
 
 
-def get_db(): 
+def get_db():
     db = SessionLocal()
     try:
         yield db

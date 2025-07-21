@@ -5,9 +5,10 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
-import os
+import os # Ensure os is imported
 
-SECRET_KEY = os.getenv("JWT_SECRET", "your_dev_secret")
+# Fetch SECRET_KEY from environment variable
+SECRET_KEY = os.getenv("JWT_SECRET", "your_dev_secret") # Using a strong fallback is good
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 

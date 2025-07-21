@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, EmailStr
-from typing import Annotated
+from typing import Annotated, Optional
 
 
 class UserSignin(BaseModel):
@@ -40,9 +40,24 @@ class SignUpResponse(BaseModel):
 class SignInResponse(BaseModel):
     access_token: str
     token_type: str
-    message: str   # <== This is missing from your actual return
+    message: str
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: Annotated[
+        EmailStr,
+        Field(..., description="Email of the user requesting password reset")
+    ]
 
+class ResetPasswordRequest(BaseModel):
+    token: Annotated[
+        str,
+        Field(..., description="Password reset token received by email")
+    ]
+    new_password: Annotated[
+        str,
+        Field(..., min_length=6, description="New password for the user")
+    ]
 
-
+class MessageResponse(BaseModel):
+    message: str
